@@ -16,4 +16,4 @@ fmt:
 
 # Run ghcid -- auto-recompile and run `main` function
 run:
-    ghcid -c "cabal repl exe:xmonad-nix" --warnings -T :main
+    ghcid -c "cabal repl exe:myxmonad" --warnings -T :main

@@ -8,6 +8,7 @@
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
     fourmolu-nix.url = "github:jedimahdi/fourmolu-nix";
+    east-gate.url = "github:head-gardener/east-gate";
   };
 
   outputs = inputs:
@@ -29,7 +30,7 @@
             root = ./.;
             fileset = lib.fileset.unions [
               ./src
-              ./xmonad-nix.cabal
+              ./myxmonad.cabal
               ./LICENSE
               ./README.md
             ];
@@ -46,6 +47,7 @@
             aeson.source = "1.5.0.0" # Hackage version
             shower.source = inputs.shower; # Flake input
             */
+            east-gate.source = inputs.east-gate;
           };
 
           # Add your package overrides here
@@ -96,8 +98,8 @@
         };
 
         # Default package & app.
-        packages.default = self'.packages.xmonad-nix;
-        apps.default = self'.apps.xmonad-nix;
+        packages.default = self'.packages.myxmonad;
+        apps.default = self'.apps.myxmonad;
 
         # Default shell.
         devShells.default = pkgs.mkShell {
