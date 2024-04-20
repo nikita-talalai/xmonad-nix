@@ -5,6 +5,7 @@ import XMonad.Layout.Tabbed
 import XMonad.Util.EZConfig
 import XMonad.Hooks.EastGate
 import XMonad.Util.NamedScratchpad
+import XMonad.Hooks.WindowSwallowing
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -52,6 +53,8 @@ myStartupHook :: X ()
 myStartupHook = 
   spawn "myxmobar"
 
+myHandleEventHook = swallowEventHook (className =? "Alacritty") (return True)
+
 main = xmonad $ (withMetrics def) $ myConfig
 
 myConfig = def
@@ -65,6 +68,7 @@ myConfig = def
   , focusedBorderColor = "#ff0000"
   , manageHook = myManageHook
   , startupHook = myStartupHook
+  , handleEventHook = myHandleEventHook
   }
   `additionalKeysP`
   [ ("M-f", spawn "firefox")
