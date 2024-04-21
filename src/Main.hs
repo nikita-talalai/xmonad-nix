@@ -6,6 +6,7 @@ import XMonad.Util.EZConfig
 import XMonad.Hooks.EastGate
 import XMonad.Util.NamedScratchpad
 import XMonad.Hooks.WindowSwallowing
+import XMonad.Hooks.ManageDocks
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -24,7 +25,7 @@ myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 myNormalBorderColor  = "#dddddd"
 myFocusedBorderColor = "#ff0000"
 
-myLayout = tiled ||| Mirror tiled ||| Full ||| simpleTabbed
+myLayout = avoidStrutsOn [U] (tiled ||| Mirror tiled ||| Full ||| simpleTabbed)
   where
     tiled   = Tall nmaster delta ratio
     nmaster = 1
@@ -55,7 +56,7 @@ myStartupHook =
 
 myHandleEventHook = swallowEventHook (className =? "Alacritty") (return True)
 
-main = xmonad $ (withMetrics def) $ myConfig
+main = xmonad $ docks . (withMetrics def) $ myConfig
 
 myConfig = def
   { terminal = myTerminal
