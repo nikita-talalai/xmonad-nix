@@ -7,6 +7,7 @@ import XMonad.Hooks.EastGate
 import XMonad.Util.NamedScratchpad
 import XMonad.Hooks.WindowSwallowing
 import XMonad.Hooks.ManageDocks
+import XMonad.Layout.NoBorders
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -25,7 +26,7 @@ myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 myNormalBorderColor  = "#dddddd"
 myFocusedBorderColor = "#ff0000"
 
-myLayout = avoidStrutsOn [U] (tiled ||| Mirror tiled ||| Full ||| simpleTabbed)
+myLayout = avoidStrutsOn [U] (tiled ||| Mirror tiled ||| noBorders Full ||| noBorders simpleTabbed)
   where
     tiled   = Tall nmaster delta ratio
     nmaster = 1
