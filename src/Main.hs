@@ -26,7 +26,7 @@ myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 myNormalBorderColor  = "#dddddd"
 myFocusedBorderColor = "#ff0000"
 
-myLayout = avoidStrutsOn [U] (tiled ||| Mirror tiled ||| noBorders Full ||| noBorders simpleTabbed)
+myLayout = avoidStrutsOn [U] (noBorders Full ||| tiled ||| Mirror tiled ||| noBorders simpleTabbed)
   where
     tiled   = Tall nmaster delta ratio
     nmaster = 1
@@ -76,4 +76,5 @@ myConfig = def
   [ ("M-f", spawn "firefox")
   , ("M-r", spawn "rofi -show drun")
   , ("M-o", namedScratchpadAction scratchpads "term")
+  , ("M-S-b", sendMessage ToggleStruts)
   ]
