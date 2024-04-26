@@ -46,6 +46,7 @@ scratchpads = [ NS "term" "alacritty -T scratchpad" queryTerm manageTerm]
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
+    , className =? "obsidian"           --> doIgnore
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
     , namedScratchpadManageHook scratchpads 
