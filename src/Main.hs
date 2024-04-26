@@ -77,4 +77,5 @@ myConfig = def
   , ("M-r", spawn "rofi -show drun")
   , ("M-o", namedScratchpadAction scratchpads "term")
   , ("M-S-b", sendMessage ToggleStruts)
+  , ("M-S-x", restart "/run/current-system/sw/bin/myxmonad" True)
   ]
