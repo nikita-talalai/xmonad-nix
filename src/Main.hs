@@ -21,8 +21,6 @@ myBorderWidth   = 1
 
 myModMask       = mod4Mask
 
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
-
 myNormalBorderColor  = "#dddddd"
 myFocusedBorderColor = "#ff0000"
 
@@ -43,12 +41,14 @@ scratchpads = [ NS "term" "alacritty -T scratchpad" queryTerm manageTerm]
         xOffset = 0.05
         yOffset = 0.05
 
+myWorkspaces    = ["web","read","notes","chats","term","6","7","8","9"]
+
 myManageHook = composeAll
-    [ className =? "MPlayer"        --> doFloat
-    , className =? "Gimp"           --> doFloat
-    , className =? "obsidian"           --> doIgnore
-    , resource  =? "desktop_window" --> doIgnore
-    , resource  =? "kdesktop"       --> doIgnore
+    [ className =? "firefox"          --> doShift "web"
+    , className =? "Zathura"          --> doShift "read"
+    , className =? "obsidian"         --> doShift "notes"
+    , className =? "TelegramDesktop"  --> doShift "chats"
+    , className =? "Alacritty"        --> doShift "term"
     , namedScratchpadManageHook scratchpads 
     ]
 
