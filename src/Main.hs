@@ -8,6 +8,7 @@ import Data.Monoid
 -- Hooks
 import XMonad.Hooks.EastGate
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.WindowSwallowing
 
 --Layouts
@@ -53,13 +54,16 @@ scratchpads = [ NS "term" "alacritty -T scratchpad" queryTerm manageTerm]
 
 myWorkspaces    = ["web","read","notes","chats","term","6","7","8","9"]
 
-myManageHook = composeAll
-    [ className =? "firefox"                                --> doShift "web"
-    , className =? "Zathura"                                --> doShift "read"
-    , className =? "obsidian"                               --> doShift "notes"
-    , className =? "TelegramDesktop"                        --> doShift "chats"
-    , className =? "Alacritty"                              --> doShift "term"
-    , namedScratchpadManageHook scratchpads 
+myManageHook = composeOne [ 
+    appName   =? "Places"           -?> doShift "web" <+> (doRectFloat $ W.RationalRect 0 0 0.5 0.5),
+    className =? "firefox"          -?> doShift "web",
+    className =? "Zathura"          -?> doShift "read",
+    className =? "obsidian"         -?> doShift "notes",
+    className =? "TelegramDesktop"  -?> doShift "chats",
+    className =? "Alacritty"        -?> doShift "term",
+    isFullscreen  -?> doFullFloat,
+    isDialog      -?> doRectFloat $ W.RationalRect 0 0 0.3 0.3
+    -- namedScratchpadManageHook scratchpads 
     ]
 
 myStartupHook :: X ()
