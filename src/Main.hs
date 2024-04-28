@@ -1,16 +1,26 @@
-import XMonad
-import Data.Monoid
+-- Base
 import System.Exit
-import XMonad.Layout.Tabbed
-import XMonad.Util.EZConfig
-import XMonad.Hooks.EastGate
-import XMonad.Util.NamedScratchpad
-import XMonad.Hooks.WindowSwallowing
-import XMonad.Hooks.ManageDocks
-import XMonad.Layout.NoBorders
+import XMonad
 
-import qualified XMonad.StackSet as W
+-- Data
+import Data.Monoid
+
+-- Hooks
+import XMonad.Hooks.EastGate
+import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.WindowSwallowing
+
+--Layouts
+import XMonad.Layout.NoBorders
+import XMonad.Layout.Tabbed
+
+-- Utils
+import XMonad.Util.EZConfig
+import XMonad.Util.NamedScratchpad
+
+
 import qualified Data.Map        as M
+import qualified XMonad.StackSet as W
 
 myTerminal      = "alacritty"
 
@@ -44,11 +54,11 @@ scratchpads = [ NS "term" "alacritty -T scratchpad" queryTerm manageTerm]
 myWorkspaces    = ["web","read","notes","chats","term","6","7","8","9"]
 
 myManageHook = composeAll
-    [ className =? "firefox"          --> doShift "web"
-    , className =? "Zathura"          --> doShift "read"
-    , className =? "obsidian"         --> doShift "notes"
-    , className =? "TelegramDesktop"  --> doShift "chats"
-    , className =? "Alacritty"        --> doShift "term"
+    [ className =? "firefox"                                --> doShift "web"
+    , className =? "Zathura"                                --> doShift "read"
+    , className =? "obsidian"                               --> doShift "notes"
+    , className =? "TelegramDesktop"                        --> doShift "chats"
+    , className =? "Alacritty"                              --> doShift "term"
     , namedScratchpadManageHook scratchpads 
     ]
 
