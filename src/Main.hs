@@ -93,4 +93,5 @@ myConfig =
                       , ("M-o", namedScratchpadAction scratchpads "term")
                       , ("M-S-b", sendMessage ToggleStruts)
                       , ("M-S-x", restart "/run/current-system/sw/bin/myxmonad" True)
+                      , ("M-<Print>", spawn "screenshot-x")
                       ]
