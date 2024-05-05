@@ -92,6 +92,9 @@ myConfig =
                       , ("M-r", spawn "rofi -show drun")
                       , ("M-o", namedScratchpadAction scratchpads "term")
                       , ("M-S-b", sendMessage ToggleStruts)
-                      , ("M-S-x", restart "/run/current-system/sw/bin/myxmonad" True)
+                      , ("M-S-r", restart "/run/current-system/sw/bin/myxmonad" True)
                       , ("M-<Print>", spawn "screenshot-x")
+                      , ("M-<Return>", spawn "alacritty")
+                      , ("M-q", kill)
+                      , ("M-S-e", io (exitWith ExitSuccess))
                       ]
