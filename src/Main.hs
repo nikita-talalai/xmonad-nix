@@ -1,3 +1,6 @@
+-- Actions
+import XMonad.Actions.Navigation2D
+
 -- Base
 import System.Exit
 import XMonad
@@ -12,7 +15,7 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.WindowSwallowing
 
 -- Layouts
-import XMonad.Layout.NoBorders
+import XMonad.Layout.NoBorders (noBorders, smartBorders)
 import XMonad.Layout.Tabbed
 
 -- Utils
@@ -34,7 +37,7 @@ myModMask = mod4Mask
 myNormalBorderColor = "#dddddd"
 myFocusedBorderColor = "#ff0000"
 
-myLayout = avoidStrutsOn [U] (noBorders Full ||| tiled ||| Mirror tiled ||| noBorders simpleTabbed)
+myLayout = avoidStrutsOn [U] (noBorders Full ||| smartBorders tiled ||| noBorders simpleTabbed)
   where
     tiled = Tall nmaster delta ratio
     nmaster = 1
@@ -72,7 +75,15 @@ myStartupHook =
 
 myHandleEventHook = swallowEventHook (className =? "Alacritty") (return True)
 
-main = xmonad $ docks . withMetrics def $ myConfig
+-- myNavigation2DConfig =
+
+-- main = xmonad $ docks . withNavigation2DConfig myNavigation2DConfig . withMetrics def $ myConfig
+main = xmonad $ docks . navigation2DP def
+                              ("<Up>", "<Left>", "<Down>", "<Right>")
+                              [("M-",   windowGo  ),
+                               ("M-S-", windowSwap)]
+                              False
+                      . withMetrics def $ myConfig
 
 myConfig =
   def
