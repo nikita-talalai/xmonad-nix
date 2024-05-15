@@ -37,12 +37,12 @@ myModMask = mod4Mask
 myNormalBorderColor = "#dddddd"
 myFocusedBorderColor = "#ff0000"
 
-myLayout = avoidStrutsOn [U] (noBorders Full ||| smartBorders tiled ||| noBorders simpleTabbed)
+myLayout = avoidStrutsOn [U] (Full ||| tabbedAlways shrinkText myTabConfig)
   where
-    tiled = Tall nmaster delta ratio
-    nmaster = 1
-    ratio = 1 / 2
-    delta = 3 / 100
+    myTabConfig = def { inactiveBorderColor = "#FF0000"
+                      , inactiveColor = "#1c1b22"
+                      , activeColor = "#42414d"
+                      }
 
 scratchpads = [NS "term" "alacritty -T scratchpad" queryTerm manageTerm]
   where
@@ -54,7 +54,7 @@ scratchpads = [NS "term" "alacritty -T scratchpad" queryTerm manageTerm]
         xOffset = 0.05
         yOffset = 0.05
 
-myWorkspaces = ["web", "read", "notes", "chats", "term", "6", "7", "8", "9"]
+myWorkspaces = ["web", "read", "notes", "chats", "term"] ++ map show [6 .. 9]
 
 myManageHook =
   composeOne
@@ -75,18 +75,21 @@ myStartupHook =
 
 myHandleEventHook = swallowEventHook (className =? "Alacritty") (return True)
 
--- myNavigation2DConfig =
+myKeys = 
+    [ ("M-<Return>", spawn "alacritty")
+    , ("M-q", kill)
+    , ("M-<Tab>", sendMessage NextLayout)
+    -- , ("M-S-<Tab>", setLayout $ XMonad.layoutHook conf)
+    , ("M-f", spawn "firefox")
+    , ("M-r", spawn "rofi -show drun")
+    , ("M-o", namedScratchpadAction scratchpads "term")
+    , ("M-S-b", sendMessage ToggleStruts)
+    , ("M-S-r", restart "/run/current-system/sw/bin/myxmonad" True)
+    , ("M-<Print>", spawn "screenshot-x")
+    , ("M-S-e", io (exitWith ExitSuccess))
+    ]
 
--- main = xmonad $ docks . withNavigation2DConfig myNavigation2DConfig . withMetrics def $ myConfig
-main = xmonad $ docks . navigation2DP def
-                              ("<Up>", "<Left>", "<Down>", "<Right>")
-                              [("M-",   windowGo  ),
-                               ("M-S-", windowSwap)]
-                              False
-                      . withMetrics def $ myConfig
-
-myConfig =
-  def
+myConfig = def
     { terminal = myTerminal
     , modMask = mod4Mask
     , layoutHook = myLayout
@@ -99,13 +102,9 @@ myConfig =
     , startupHook = myStartupHook
     , handleEventHook = myHandleEventHook
     }
-    `additionalKeysP` [ ("M-f", spawn "firefox")
-                      , ("M-r", spawn "rofi -show drun")
-                      , ("M-o", namedScratchpadAction scratchpads "term")
-                      , ("M-S-b", sendMessage ToggleStruts)
-                      , ("M-S-r", restart "/run/current-system/sw/bin/myxmonad" True)
-                      , ("M-<Print>", spawn "screenshot-x")
-                      , ("M-<Return>", spawn "alacritty")
-                      , ("M-q", kill)
-                      , ("M-S-e", io (exitWith ExitSuccess))
-                      ]
+
+main = xmonad $ docks 
+                . navigation2DP  def ("<Up>", "<Left>", "<Down>", "<Right>") [("M-",   windowGo  ), ("M-S-", windowSwap)] False
+                . withMetrics    def 
+                $ myConfig
+                `additionalKeysP` myKeys
