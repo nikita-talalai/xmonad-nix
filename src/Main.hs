@@ -12,6 +12,8 @@ import Data.Monoid
 import XMonad.Hooks.EastGate
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.StatusBar
+import XMonad.Hooks.StatusBar.PP
 import XMonad.Hooks.WindowSwallowing
 
 -- Layouts
@@ -89,6 +91,8 @@ myKeys =
     , ("M-S-e", io (exitWith ExitSuccess))
     ]
 
+mySB = statusBarProp "xmobar" (pure xmobarPP)
+
 myConfig = def
     { terminal = myTerminal
     , modMask = mod4Mask
@@ -105,6 +109,7 @@ myConfig = def
 
 main = xmonad $ docks 
                 . navigation2DP  def ("<Up>", "<Left>", "<Down>", "<Right>") [("M-",   windowGo  ), ("M-S-", windowSwap)] False
+                . withSB mySB
                 . withMetrics    def 
                 $ myConfig
                 `additionalKeysP` myKeys
