@@ -32,7 +32,7 @@ myTerminal = "alacritty"
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = False
 
-myBorderWidth = 1
+myBorderWidth = 0
 
 myModMask = mod4Mask
 
@@ -98,7 +98,7 @@ myConfig = def
     , modMask = mod4Mask
     , layoutHook = myLayout
     , focusFollowsMouse = False
-    , borderWidth = 1
+    , borderWidth = myBorderWidth
     , workspaces = myWorkspaces
     , normalBorderColor = "#dddddd"
     , focusedBorderColor = "#ff0000"
